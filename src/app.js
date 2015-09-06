@@ -5,6 +5,7 @@
  */
 
 var UI = require('ui');
+var Vector2 = require('vector2');
 var ZWayLib = require('zway');
 var Settings = require('settings');
 
@@ -13,12 +14,12 @@ Settings.config({
   autoSave: true
   },
   function(e) {
-    console.log('opened config');
+    console.log('Opened config');
   },
   function(e) {
-    console.log('Recieved settings!');
+    console.log('Recieved settings');
     // Show the parsed response
-    console.log(JSON.stringify(e.options));
+    //console.log(JSON.stringify(e.options));
 
     // Show the raw response if parsing failed
     if (e.failed) {
@@ -30,22 +31,29 @@ Settings.config({
 console.log('Loading settings: ' + JSON.stringify(Settings.option()));
 var ZWay = new ZWayLib(Settings.option());
 
-var main = new UI.Card({
-  title: 'ZWay',
-  icon: 'images/menu_icon.png',
-  subtitle: 'Loading...'
+var main = new UI.Window({ fullscreen: true });
+var image = new UI.Image({
+  position: new Vector2(0, 0),
+  size: new Vector2(144, 168),
+  image: 'images/zsplash.png'
 });
-
+main.add(image);
 main.show();
 
+console.log('calling listDevices');
 ZWay.listDevices({}, function (err, data) {
+  console.log('listDevices callback returned');
   if (err || !data || !data.devices) {
     console.log(JSON.stringify(err));
     console.log(JSON.stringify(data));
-    return main.subtitle('Error talking to ZWay!');
+    var error = new UI.Card({
+      title: 'ZWay Error',
+      subtitle: 'Error talking to ZWay',
+      body: err
+    });
+
+    return error.show();
   }
-  
-  main.subtitle('Setting up...');
   
   var devices = [];
   for (var k in data.devices) {

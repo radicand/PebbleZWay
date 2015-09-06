@@ -2,14 +2,14 @@ var ajax = require('ajax');
 
 var ZWay = function (settings) {
   this.settings = settings;
-  console.log('ZWay Settings: ' + JSON.stringify(this.settings));
+  //console.log('ZWay Settings: ' + JSON.stringify(this.settings));
 };
 
 ZWay.prototype.talkToZWay = function (opts, done) {
   var url = 'http://' + this.settings.host + ':8083' + opts.url;
-  console.log('ajax calling: ' + url);
   var auth = 'Basic ' + btoa(this.settings.username + ':' + this.settings.password);
-  console.log('using auth: ' + auth);
+  //console.log('ajax calling: ' + url);
+  //console.log('using auth: ' + auth);
   return ajax(
     {
       url: url,
@@ -22,12 +22,12 @@ ZWay.prototype.talkToZWay = function (opts, done) {
     },
     function(data, status, request) {
       // success
-      console.log('ajax data in: (' + status + ') ' + JSON.stringify(data));
+      //console.log('ajax data in: (' + status + ') ' + JSON.stringify(data));
       return done (null, data);
     },
     function(error, status, request) {
       // error
-      console.log('ajax error: (' + status + ') ' + JSON.stringify(error));
+      //console.log('ajax error: (' + status + ') ' + JSON.stringify(error));
       return done (error);
     }
   );

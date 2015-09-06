@@ -4,13 +4,12 @@
         "configurable"
     ],
     "companyName": "Nick Pappas",
-    "longName": "Z-Way",
+    "longName": "Z-Way Control",
     "projectType": "pebblejs",
     "resources": {
         "media": [
             {
                 "file": "images/menu_icon.png",
-                "menuIcon": true,
                 "name": "IMAGE_MENU_ICON",
                 "type": "png"
             },
@@ -28,11 +27,22 @@
                 "file": "fonts/UbuntuMono-Regular.ttf",
                 "name": "MONO_FONT_14",
                 "type": "font"
+            },
+            {
+                "file": "images/zsplash.png",
+                "name": "IMAGES_ZSPLASH_PNG",
+                "type": "png"
+            },
+            {
+                "file": "images/zlogo.png",
+                "menuIcon": true,
+                "name": "IMAGES_ZLOGO_PNG",
+                "type": "png"
             }
         ]
     },
     "sdkVersion": "3",
-    "shortName": "Z-Way",
+    "shortName": "Z-Way Control",
     "uuid": "5b7e0479-717c-4480-b3c5-193a68addead",
     "versionCode": 1,
     "versionLabel": "1.0",

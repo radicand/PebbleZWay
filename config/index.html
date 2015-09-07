@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>ZWay Control Configuration</title>
+  <link rel='stylesheet' type='text/css' href='css/slate.min.css'>
+  <script src='js/slate.min.js'></script>
+  <style>
+  .title {
+    padding: 15px 10px;
+    text-transform: uppercase;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #888888;
+    text-align: center;
+  }
+  </style>
+  </head>
+
+  <body>
+    <h1 class='title'>ZWay Control Configuration</h1>
+
+    <div class='item-container'>
+      <div class='item-container-content'>
+        <div class='item'>
+          Use this configuration page to setup this app.
+        </div>
+      </div>
+    </div>
+
+    <div class='item-container'>
+      <div class='item-container-header'>Raspberry Pi Server</div>
+      <div class='item-container-content'>
+        <label class='item'>
+          IP Address
+          <input id='host' type='text' class='item-input' placeholder='Example: 192.168.1.10'>
+        </label>
+      </div>
+      <div class='item-container-footer'>
+        This should be the IP address of your Raspberry Pi server that is running ZWay
+      </div>
+    </div>
+
+    <div class='item-container'>
+      <div class='item-container-header'>ZWay API</div>
+      <div class='item-container-content'>
+        <label class='item'>
+          Username
+          <input id='username' type='text' class='item-input' value='admin'>
+        </label>
+      </div>
+      <div class='item-container-content'>
+        <label class='item'>
+          Password
+          <input id='password' type='text' class='item-input' value='admin'>
+        </label>
+      </div>
+      <div class='item-container-footer'>
+        The API username and password can be configured at http://ip-address-of-your-pi:8084/
+      </div>
+    </div>
+
+    <div class='item-container'>
+      <div class='button-container'>
+        <input id='submit_button' type='button' class='item-button' value='SUBMIT'>
+      </div>
+    </div>
+  </body>
+  <script>
+  function getConfigData() {
+    var host = document.getElementById('host');
+    var username = document.getElementById('username');
+    var password = document.getElementById('password');
+
+    var options = {
+      'host': host.value,
+      'username': username.value,
+      'password': password.value,
+    };
+    // Save for next launch
+    localStorage['host'] = options['host'];
+    localStorage['username'] = options['username'];
+    localStorage['password'] = options['password'];
+    console.log('Got options: ' + JSON.stringify(options));
+    return options;
+  }
+  function getQueryParam(variable, defaultValue) {
+    var query = location.search.substring(1);
+    var vars = query.split('&');
+    for (var i = 0; i < vars.length; i++) {
+      var pair = vars[i].split('=');
+      if (pair[0] === variable) {
+        return decodeURIComponent(pair[1]);
+      }
+    }
+    return defaultValue || false;
+  }
+
+  var submitButton = document.getElementById('submit_button');
+  submitButton.addEventListener('click', function() {
+    console.log('Submit');
+    // Set the return URL depending on the runtime environment
+    var return_to = getQueryParam('return_to', 'pebblejs://close#');
+    document.location = return_to + encodeURIComponent(JSON.stringify(getConfigData()));
+  });
+  (function() {
+    var host = document.getElementById('host');
+    var username = document.getElementById('username');
+    var password = document.getElementById('password');
+
+    // Load any previously saved configuration, if available
+    if(localStorage['host']) {
+      host.value = localStorage['host'];
+      username.value = localStorage['username'];
+      password.value = localStorage['password'];
+    }
+  })();
+  </script>
+</html>

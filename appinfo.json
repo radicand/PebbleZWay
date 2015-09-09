@@ -29,14 +29,14 @@
                 "type": "font"
             },
             {
-                "file": "images/zsplash.png",
-                "name": "IMAGES_ZSPLASH_PNG",
-                "type": "png"
-            },
-            {
                 "file": "images/zlogo.png",
                 "menuIcon": true,
                 "name": "IMAGES_ZLOGO_PNG",
+                "type": "png"
+            },
+            {
+                "file": "images/zsplash.png",
+                "name": "IMAGES_ZSPLASH_PNG",
                 "type": "png"
             }
         ]
@@ -45,7 +45,7 @@
     "shortName": "Z-Way Control",
     "uuid": "5b7e0479-717c-4480-b3c5-193a68addead",
     "versionCode": 1,
-    "versionLabel": "1.0",
+    "versionLabel": "1.1",
     "watchapp": {
         "hiddenApp": false,
         "watchface": false

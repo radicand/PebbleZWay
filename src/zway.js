@@ -36,7 +36,29 @@ ZWay.prototype.talkToZWay = function (opts, done) {
 ZWay.prototype.listDevices = function (opts, done) {
   return this.talkToZWay({
     url: '/ZWaveAPI/Data/0'
-  }, done);
+  }, function (err, data) {
+    if (err) return done(err);
+    
+    var devices = [];
+    for (var k in data.devices) {
+      if (k === '1') continue; // don't do the controller
+      
+      if (data.devices[k].instances[0].commandClasses[37] &&
+      data.devices[k].instances[0].commandClasses[37].data.level.value !== null) {
+        devices.push({
+          id: k,
+          name: data.devices[k].data.givenName.value,
+          isOn: data.devices[k].instances[0].commandClasses[37].data.level.value,
+          type: 'switch'
+        });
+      }
+    }
+    
+    if (devices.length === 0) {
+      return done('No switches found on the network');
+    }
+    return done(null, devices);
+  });
 };
 
 ZWay.prototype.toggleSwitch = function (opts, done) {

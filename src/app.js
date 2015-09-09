@@ -41,11 +41,11 @@ main.add(image);
 main.show();
 
 console.log('calling listDevices');
-ZWay.listDevices({}, function (err, data) {
+ZWay.listDevices({}, function (err, devices) {
   console.log('listDevices callback returned');
-  if (err || !data || !data.devices) {
+  if (err || !devices) {
     console.log(JSON.stringify(err));
-    console.log(JSON.stringify(data));
+    console.log(JSON.stringify(devices));
     var error = new UI.Card({
       title: 'ZWay Error',
       subtitle: 'Error talking to ZWay',
@@ -55,22 +55,7 @@ ZWay.listDevices({}, function (err, data) {
     return error.show();
   }
   
-  var devices = [];
-  for (var k in data.devices) {
-    if (data.devices[k].instances[0].commandClasses[37] &&
-    data.devices[k].instances[0].commandClasses[37].data.level.value !== null) {
-      devices.push({
-        id: k,
-        name: data.devices[k].data.givenName.value,
-        isOn: data.devices[k].instances[0].commandClasses[37].data.level.value,
-        type: 'switch'
-      });
-    }
-    if (data.devices[k].data.basicType === 4) {
-      // switch
-      devices.push(data.devices[k].data);
-    }
-  }
+  console.log('Devices: ' + JSON.stringify(devices));
 
   var menu = new UI.Menu({
     sections: [{
